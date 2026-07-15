@@ -27,12 +27,16 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-streamnest}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-streamnest}?schema=public
       JWT_SECRET: ${JWT_SECRET}
       NODE_ENV: production
-    # Runs migrations then starts the server every time the container boots —
-    # safe to re-run, and means a fresh EC2 box just needs `docker compose up -d`.
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    # No migration history exists for this project (we went straight to Docker),
+    # so `db push` syncs schema.prisma -> the database directly on every boot.
+    # This is fine for a single-admin app at this stage; once the schema
+    # stabilizes, switch to `prisma migrate dev` locally + `migrate deploy`
+    # here for proper, reviewable migration history.
     command: sh -c "npx prisma db push --skip-generate && node server.js"
     expose:
       - "3000"
-
+      
   nginx:
     image: nginx:alpine
     restart: unless-stopped
