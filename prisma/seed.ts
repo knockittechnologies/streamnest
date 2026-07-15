@@ -31,14 +31,14 @@ async function main() {
   // Demo admin + regular user (change the password after first login)
   const passwordHash = await bcrypt.hash('streamnest123', 10);
   const admin = await prisma.user.upsert({
-    where: { email: '[email protected]' },
+    where: { email: 'admin@streamnest.local' },
     update: {},
-    create: { email: '[email protected]', passwordHash, name: 'Admin', role: 'ADMIN' },
+    create: { email: 'admin@streamnest.local', passwordHash, name: 'Admin', role: 'ADMIN' },
   });
   const demoUser = await prisma.user.upsert({
-    where: { email: '[email protected]' },
+    where: { email: 'demo@streamnest.local' },
     update: {},
-    create: { email: '[email protected]', passwordHash, name: 'Demo User', role: 'USER' },
+    create: { email: 'demo@streamnest.local', passwordHash, name: 'Demo User', role: 'USER' },
   });
 
   for (const user of [admin, demoUser]) {
@@ -80,7 +80,7 @@ async function main() {
     }
   }
 
-  console.log('Seed complete. Demo login: [email protected] / [email protected] — password: streamnest123');
+  console.log('Seed complete. Demo login: admin@streamnest.local / demo@streamnest.local — password: streamnest123');
 }
 
 main()
