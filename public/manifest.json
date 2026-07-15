@@ -1,0 +1,10 @@
+{
+  "name": "StreamNest",
+  "short_name": "StreamNest",
+  "description": "A personal dashboard for your own authorized streaming sources.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0908",
+  "theme_color": "#0A0908",
+  "icons": []
+}
