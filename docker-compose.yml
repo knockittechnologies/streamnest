@@ -29,7 +29,7 @@ services:
       NODE_ENV: production
     # Runs migrations then starts the server every time the container boots —
     # safe to re-run, and means a fresh EC2 box just needs `docker compose up -d`.
-    command: sh -c "npx prisma migrate deploy && node server.js"
+    command: sh -c "npx prisma db push --skip-generate && node server.js"
     expose:
       - "3000"
 
